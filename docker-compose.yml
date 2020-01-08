@@ -5,7 +5,6 @@ services:
     build: .
     ports:
       - "8080:80"
-    command: ["sh","-c","ls -lah ./ && ./idor"]
     environment:
       - DB_DEBUG=false
       - HOST=:80
