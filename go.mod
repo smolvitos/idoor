@@ -1,4 +1,4 @@
-module github.com/dilap54/voronov_idor
+module github.com/smolvitos/idoor
 
 go 1.12
 

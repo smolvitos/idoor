@@ -9,7 +9,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/dilap54/voronov_idor/internal/repository"
+	"github.com/smolvitos/idoor/internal/repository"
 )
 
 var (

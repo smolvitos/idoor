@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/dilap54/voronov_idor/internal/app"
+	"github.com/smolvitos/idoor/internal/app"
 )
 
 type ContextKey string

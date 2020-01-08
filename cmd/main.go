@@ -7,10 +7,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/dilap54/voronov_idor/internal/app"
-	"github.com/dilap54/voronov_idor/internal/config"
-	"github.com/dilap54/voronov_idor/internal/repository"
-	"github.com/dilap54/voronov_idor/internal/server"
+	"github.com/smolvitos/idoor/internal/app"
+	"github.com/smolvitos/idoor/internal/config"
+	"github.com/smolvitos/idoor/internal/repository"
+	"github.com/smolvitos/idoor/internal/server"
 )
 
 func main() {

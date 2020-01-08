@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dilap54/voronov_idor/internal/repository"
+	"github.com/smolvitos/idoor/internal/repository"
 	"github.com/jinzhu/gorm"
 )
 
