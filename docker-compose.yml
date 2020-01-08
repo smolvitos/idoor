@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  idor:
+    image: dilap54/idoor:latest
+    build: .
+    ports:
+      - "8080:80"
+    command: ["sh","-c","ls -lah ./ && ./idor"]
+    environment:
+      - DB_DEBUG=false
+      - HOST=:80
+      - CODE=secret-flag

@@ -1,0 +1,18 @@
+{{template "header"}}
+
+<div class="container">
+  <title>Сообщения</title>
+  <h1>Сообщения</h1>
+  <div class="row">
+    <div class="col-md-6">
+      {{range .Messages}}
+      <div class="row">
+        <b>{{ .SourceName }}</b>:
+        <p>{{ .Text }}</p>
+      </div>
+    </div>
+    {{end}}
+  </div>
+</div>
+
+{{template "footer"}}

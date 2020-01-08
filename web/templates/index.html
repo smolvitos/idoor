@@ -1,0 +1,15 @@
+{{template "header"}}
+
+<div class="container">
+  <title>Главная</title>
+  <h1>Главная</h1>
+  <ul>
+    {{range .Users}}
+    <li>
+      <b>{{ .Login }}</b>
+      <a href="/messages/{{ .ID }}">чат</a>
+    </li>
+    {{end}}
+  </ul>
+</div>
+{{template "footer"}}
