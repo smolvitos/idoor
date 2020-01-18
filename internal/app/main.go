@@ -5,10 +5,9 @@ import (
 	"encoding/hex"
 	"fmt"
 	"strconv"
-	"strings"
 
-	"github.com/smolvitos/idoor/internal/repository"
 	"github.com/jinzhu/gorm"
+	"github.com/smolvitos/idoor/internal/repository"
 )
 
 type Service struct {
@@ -30,28 +29,28 @@ func (s *Service) FindOneUser(id uint) (*repository.User, error) {
 }
 
 func (s *Service) FindUserByToken(token string) (*repository.User, error) {
-	tokenArr := strings.Split(token, ":")
-	if len(tokenArr) != 2 {
-		return nil, fmt.Errorf("token should consist of 2 parts divided by ':', got: %s", tokenArr)
-	}
-	userID, err := strconv.ParseUint(tokenArr[0], 10, 64)
-	if err != nil {
-		return nil, err
-	}
 	var user repository.User
-	if err := s.db.First(&user, userID).Error; err != nil {
+	if err := s.db.Where("token = ?", token).First(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
 		return nil, err
 	}
-	if s.GenerateAuthToken(&user) == token {
-		return &user, nil
-	}
-	return nil, nil
+	return &user, nil
 }
 
 func (Service) GenerateAuthToken(user *repository.User) string {
 	userID := strconv.FormatUint(uint64(user.ID), 10)
 	md5Hash := md5.Sum([]byte(userID))
-	return fmt.Sprintf("%s:%s", userID, hex.EncodeToString(md5Hash[:]))
+	return fmt.Sprintf("%s", hex.EncodeToString(md5Hash[:]))
+}
+
+func (s *Service) SaveTokenForAuth(user *repository.User, token string) error {
+	user.Token = token
+	if err := s.db.Save(user).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *Service) FindUserByLogin(login string) (*repository.User, error) {

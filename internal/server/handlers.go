@@ -70,9 +70,11 @@ func (s *Service) Login(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
+	token := s.app.GenerateAuthToken(user)
+	s.app.SaveTokenForAuth(user, token)
 	http.SetCookie(w, &http.Cookie{
 		Name:    "token",
-		Value:   s.app.GenerateAuthToken(user),
+		Value:   token,
 		Expires: time.Now().Add(24 * time.Hour),
 	})
 	http.Redirect(w, r, "/", http.StatusFound)
