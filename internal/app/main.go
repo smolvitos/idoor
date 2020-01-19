@@ -42,6 +42,9 @@ func (s *Service) FindOneUser(id uint) (*repository.User, error) {
 }
 
 func (s *Service) FindUserByToken(token string) (*repository.User, error) {
+	if token == "" {
+		return nil, nil
+	}
 	var user repository.User
 	if err := s.db.Where("token = ?", token).First(&user).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
