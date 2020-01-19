@@ -8,4 +8,4 @@ services:
     environment:
       - DB_DEBUG=false
       - HOST=:80
-      - "CODE=Код: SarCTF{iNSeCuRe_DiReCT_0BJeCT_ReFeReNCe}""
+      - "CODE=Код: SarCTF{iNSeCuRe_DiReCT_0BJeCT_ReFeReNCe}"
