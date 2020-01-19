@@ -10,6 +10,12 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="/static/bootstrap.min.css">
 </head>
+{{ if .User }}
+<div class="userBlock" style="right: 0; position: absolute;">
+  Пользователь - {{ .User.Login }}. <a href="#">Выход</a>
+</div>
+{{ end }}
+
 {{end}}
 
 {{define "footer"}}

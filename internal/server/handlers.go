@@ -89,8 +89,10 @@ type MessageViewData struct {
 }
 
 type MessagesViewData struct {
-	Users    map[uint]*repository.User
-	Messages []MessageViewData
+	User         *repository.User
+	Users        map[uint]*repository.User
+	Interlocutor *repository.User
+	Messages     []MessageViewData
 }
 
 func (s *Service) Messages(w http.ResponseWriter, r *http.Request) {
@@ -113,6 +115,8 @@ func (s *Service) Messages(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := MessagesViewData{
+		User:         user1,
+		Interlocutor: user2,
 		Users: map[uint]*repository.User{
 			user1.ID: user1,
 			user2.ID: user2,

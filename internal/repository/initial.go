@@ -30,15 +30,53 @@ func CreateInitialData(db *gorm.DB, code string) error {
 		return err
 	}
 
-	if err := db.Create(&Message{
-		Source:      admin.ID,
-		Destination: user.ID,
-		Text:        fmt.Sprintf("Код запуска ракет: %s", code),
-	}).Create(&Message{
-		Source:      test.ID,
-		Destination: user.ID,
-		Text:        "Гы, тест",
-	}).Error; err != nil {
+	if err := db.
+		Create(&Message{
+			Source:      test.ID,
+			Destination: test.ID,
+			Text:        "Ура, диалог с самим собой)",
+		}).
+		Create(&Message{
+			Source:      user.ID,
+			Destination: admin.ID,
+			Text:        "Напомни код запуска",
+		}).
+		Create(&Message{
+			Source:      admin.ID,
+			Destination: user.ID,
+			Text:        fmt.Sprintf("Код запуска ракет: %s", code),
+		}).
+		Create(&Message{
+			Source:      test.ID,
+			Destination: user.ID,
+			Text:        "Гы, тест",
+		}).
+		Create(&Message{
+			Source:      test.ID,
+			Destination: user.ID,
+			Text:        "У нас регистрация по емэйлам.",
+		}).
+		Create(&Message{
+			Source:      user.ID,
+			Destination: test.ID,
+			Text:        "В смысле?",
+		}).
+		Create(&Message{
+			Source:      test.ID,
+			Destination: user.ID,
+			Text:        "Кто-то особо умный тестирует систему, вбивая test@test.ch",
+		}).
+		Create(&Message{
+			Source:      test.ID,
+			Destination: user.ID,
+			Text:        "Только что приходит письмо с test.ch. В переводе с французского: \"Вы ЗАЕБАЛИ!\" :)",
+		}).
+		Create(&Message{
+			Source:      user.ID,
+			Destination: test.ID,
+			Text:        "%;)",
+		}).
+		Error; err != nil {
 		return err
 	}
 	return nil

@@ -1,8 +1,8 @@
-{{template "header"}}
+{{template "header" .}}
 
 <div class="container">
   <title>Главная</title>
-  <h1>Главная - {{ .User.Login }}</h1>
+  <h1>Список пользователей</h1>
   <ul>
     {{range .Users}}
     <li>
