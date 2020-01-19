@@ -2,9 +2,12 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
+	"time"
 
+	"github.com/chr4/pwgen"
 	"github.com/gorilla/mux"
 
 	"github.com/smolvitos/idoor/internal/app"
@@ -25,6 +28,64 @@ type Service struct {
 func LogRequests(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Request %s - %s", r.Method, r.RequestURI)
+		next.ServeHTTP(w, r)
+	})
+}
+
+func RandomCookies(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.SetCookie(w, &http.Cookie{
+			Name:    "remixlang",
+			Value:   "0",
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "remixstid",
+			Value:   fmt.Sprintf("%s_%s", pwgen.Num(10), pwgen.Alpha(20)),
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "remixflash",
+			Value:   "0.0.0",
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "remixscreen_depth",
+			Value:   "24",
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "remixdt",
+			Value:   "0",
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "tmr_reqNum",
+			Value:   pwgen.Num(2),
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "tmr_lvid",
+			Value:   pwgen.Alpha(20),
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "tmr_lvidTS",
+			Value:   fmt.Sprintf("%d", time.Now().Unix()),
+			Expires: time.Now().Add(724 * time.Hour),
+		})
+		if c, _ := r.Cookie("remixsid"); c == nil {
+			http.SetCookie(w, &http.Cookie{
+				Name:    "remixsid",
+				Value:   pwgen.Alpha(36),
+				Expires: time.Now().Add(724 * time.Hour),
+			})
+			http.SetCookie(w, &http.Cookie{
+				Name:    "remixusid",
+				Value:   "NGE1YTNiYjVlOWNiODIxNTJjMGQzZDR",
+				Expires: time.Now().Add(724 * time.Hour),
+			})
+		}
 		next.ServeHTTP(w, r)
 	})
 }
@@ -52,6 +113,7 @@ func New(addr string, app *app.Service) *Service {
 	router := mux.NewRouter()
 
 	router.Use(LogRequests)
+	router.Use(RandomCookies)
 
 	fileServer := http.FileServer(http.Dir("web/static"))
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileServer))
