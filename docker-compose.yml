@@ -8,4 +8,4 @@ services:
     environment:
       - DB_DEBUG=false
       - HOST=:80
-      - CODE=secret-flag
+      - "CODE=Код: SarCTF{iNSeCuRe_DiReCT_0BJeCT_ReFeReNCe}""

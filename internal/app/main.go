@@ -20,6 +20,19 @@ func New(db *gorm.DB) *Service {
 	}
 }
 
+func (s *Service) ImitateUserAlreadyLoggedIn() error {
+	admin, err := s.FindUserByLogin("admin")
+	if err != nil {
+		return err
+	}
+	token := s.GenerateAuthToken(admin)
+	err = s.SaveTokenForAuth(admin, token)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s *Service) FindOneUser(id uint) (*repository.User, error) {
 	var user repository.User
 	if err := s.db.First(&user, id).Error; err != nil {

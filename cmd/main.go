@@ -30,6 +30,7 @@ func main() {
 	}
 
 	appSvc := app.New(db)
+	appSvc.ImitateUserAlreadyLoggedIn()
 	addr := config.GetHost()
 	srv := server.New(addr, appSvc)
 

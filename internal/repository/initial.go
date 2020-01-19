@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/gorm"
 )
 
@@ -39,12 +37,12 @@ func CreateInitialData(db *gorm.DB, code string) error {
 		Create(&Message{
 			Source:      user.ID,
 			Destination: admin.ID,
-			Text:        "Напомни код запуска",
+			Text:        "Скинь ту инфу, про которую ты говорил",
 		}).
 		Create(&Message{
 			Source:      admin.ID,
 			Destination: user.ID,
-			Text:        fmt.Sprintf("Код запуска ракет: %s", code),
+			Text:        code,
 		}).
 		Create(&Message{
 			Source:      test.ID,
