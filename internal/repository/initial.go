@@ -15,7 +15,7 @@ func CreateInitialData(db *gorm.DB, code string) error {
 	}
 	user := User{
 		Login:    "user",
-		Password: "password",
+		Password: "Сюда надо что нибудь посложней, чем просто password.",
 	}
 	if err := db.Create(&user).Error; err != nil {
 		return err
