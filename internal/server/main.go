@@ -104,6 +104,10 @@ func (s *Service) Auth(next http.Handler) http.Handler {
 			http.Redirect(w, r, "/login", http.StatusFound)
 			return
 		}
+		if user == nil {
+			http.Redirect(w, r, "/login", http.StatusFound)
+		}
+		log.Println(user)
 		ctx := context.WithValue(r.Context(), UserKey, user)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})

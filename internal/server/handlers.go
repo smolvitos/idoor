@@ -21,15 +21,18 @@ func init() {
 }
 
 type MainViewData struct {
+	User  *repository.User
 	Users []*repository.User
 }
 
 func (s *Service) MainPage(w http.ResponseWriter, r *http.Request) {
+	user := r.Context().Value(UserKey).(*repository.User)
 	users, err := s.app.FindAllUsers()
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	}
 	data := MainViewData{
+		User:  user,
 		Users: users,
 	}
 	tmpl.ExecuteTemplate(w, "index.html", data)

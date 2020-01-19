@@ -2,7 +2,7 @@
 
 <div class="container">
   <title>Главная</title>
-  <h1>Главная</h1>
+  <h1>Главная - {{ .User.Login }}</h1>
   <ul>
     {{range .Users}}
     <li>
